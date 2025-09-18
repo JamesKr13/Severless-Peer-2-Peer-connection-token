@@ -63,7 +63,7 @@ def generate_severless_connection_token():
 def find_peer_information(base85_str: str) -> str:
     seed_min = base85_str[10:]
     ciphertext = base64.b85decode(base85_str[:10])
-    key, min = round_hash(seed_min, 16)
+    key, min = round_hash(int(seed_min), 16)
     cipher = DES3.new(pad(key+COMMON_PHRASE.encode("utf-8"), 24), DES3.MODE_ECB)
     print(len(ciphertext))
     plaintext = cipher.decrypt(ciphertext)
