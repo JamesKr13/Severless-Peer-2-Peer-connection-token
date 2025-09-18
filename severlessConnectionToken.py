@@ -13,13 +13,13 @@ COMMON_PHRASE = "MyGame"
 
 def round_hash(min_start: int, byte_num: int) -> str:
     now = datetime.utcnow()
-    one_hour_back = 0
-
-    if now.minute >= 17:
-        one_hour_back = now.replace(minute=17, second=0, microsecond=0)
-    else:
-        one_hour_back = now - timedelta(hours=1)
-        one_hour_back.replace(minute=17, second=0, microsecond=0)
+    one_hour_back = now
+    if min_start != None: 
+        if now.minute >= min_start:
+            one_hour_back = now.replace(minute=min_start, second=0, microsecond=0)
+        else:
+            one_hour_back = now - timedelta(hours=1)
+            one_hour_back.replace(minute=min_start, second=0, microsecond=0)
 
     est_start_int = int(one_hour_back.strftime("%Y%m%d%H%M%S"))
 
@@ -53,7 +53,7 @@ def generate_severless_connection_token():
     public_ipv4 = find_public_ipv4()
     inital_code = ip_port_to_code(public_ipv4, 5000)
     print(len(inital_code))
-    key, start_mins = round_hash(0,16)
+    key, start_mins = round_hash(None,16)
     cipher = DES3.new(pad(key+COMMON_PHRASE.encode("utf-8"), 8), DES3.MODE_ECB)
     ciphertext = cipher.encrypt(inital_code)
     data = bytes.fromhex(str(ciphertext.hex()))
