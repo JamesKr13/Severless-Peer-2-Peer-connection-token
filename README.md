@@ -11,7 +11,7 @@ Which acts as a miniscule extra layer of protection but also ensures both partie
 ### Serverless Peer-to-Peer Connection Token System
 
 1. **Time-based key derivation (`round_hash`)**
-    - Computes a hash based on the current UTC time, rounding to the last `:17` minute.
+    - Computes a hash based on the current UTC time, rounding to the last `x` minute.
     - Uses SHA-256 and a folding XOR technique to produce a fixed-length byte key.
     - Returns the key along with the current minute for freshness.
 
